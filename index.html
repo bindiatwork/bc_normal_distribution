@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>A Normal Distribution Calculator</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A Normal Distribution Calculator ">
+  <meta name="keywords" content="Normal Distribution, Calculator, Flot, Chart, Graph">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+  <header></header>
+  <div class="container">
+
+    <div style="margin-top:10px;" class="jumbotron">
+      <h3>A Normal Distribution Calculator</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div id="placeholder" style="width: 100%; height: 400px;"></div>
+      </div>
+      <div class="col-md-4">
+        <div class="well">
+          <h4>Mean</h4>
+          <h4>Standard Deviation</h4>
+          <h4>Model</h4>
+          <h4>Find Area</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- flotcharts -->
+<script src="js/jquery.flot.js"></script>
+<!-- BootStrap V3.3.6 JS -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script>
+$(function () {
+
+    var d1 = [];
+    for (var i = 0; i < Math.PI * 2; i += 0.25) {
+      d1.push([i, Math.sin(i)]);
+    }
+
+    var d2 = [];
+    for (var i = 0; i < Math.PI * 2; i += 0.25) {
+      d2.push([i, Math.cos(i)]);
+    }
+
+    var d3 = [];
+    for (var i = 0; i < Math.PI * 2; i += 0.1) {
+      d3.push([i, Math.tan(i)]);
+    }
+
+    $.plot("#placeholder", [
+      { label: "sin(x)", data: d1 },
+      { label: "cos(x)", data: d2 },
+      { label: "tan(x)", data: d3 }
+    ], {
+      series: {
+        lines: { show: true },
+        points: { show: true }
+      },
+      xaxis: {
+        ticks: [
+          0, [ Math.PI/2, "\u03c0/2" ], [ Math.PI, "\u03c0" ],
+          [ Math.PI * 3/2, "3\u03c0/2" ], [ Math.PI * 2, "2\u03c0" ]
+        ]
+      },
+      yaxis: {
+        ticks: 10,
+        min: -2,
+        max: 2,
+        tickDecimals: 3
+      },
+      grid: {
+        backgroundColor: { colors: [ "#fff", "#eee" ] },
+        borderWidth: {
+          top: 1,
+          right: 1,
+          bottom: 2,
+          left: 2
+        }
+      }
+    });
+
+  });
+</script>
+</body>
+</html>
