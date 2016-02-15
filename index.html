@@ -10,6 +10,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/theme.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/bootstrap-slider.min.css" rel="stylesheet">
 </head>
 <body>
   <header></header>
@@ -25,9 +26,24 @@
       <div class="col-md-4">
         <div class="well">
           <h4>Mean</h4>
+          <input id="mean" style="width: 100%;" type="text" data-slider-min="-50" data-slider-max="50" data-slider-step="1" data-slider-value="0", data-slider-ticks="[-50, -25, 0, 25, 50]", data-slider-ticks-labels="['-50','-25','0','25','50']"/>
           <h4>Standard Deviation</h4>
+          <input id="sd" style="width: 100%;" type="text" data-slider-min="0.1" data-slider-max="30" data-slider-step="0.1" data-slider-value="20", data-slider-ticks="[0, 10, 20, 30]", data-slider-ticks-labels="['0','10','20','30']"/>
           <h4>Model</h4>
-          <h4>Find Area</h4>
+          <select class="form-control">
+            <option>Lower tail - P( X &lt; a )</option>
+            <option>Upper tail - P( X &gt; a )</option>
+            <option>Both tails - P( X &lt; a or X &gt; b )</option>
+            <option>Middle - P( a &lt; X &lt; b )</option>
+          </select>
+          <div>
+            <h5>a:</h5>
+            <input id="a" style="width: 100%;" type="text" data-slider-min="0.1" data-slider-max="30" data-slider-step="0.1" data-slider-value="20", data-slider-ticks="[0, 10, 20, 30]", data-slider-ticks-labels="['0','10','20','30']"/>
+          </div> 
+          <div>
+            <h5>b:</h5>
+            <input id="b" style="width: 100%;" type="text" data-slider-min="0.1" data-slider-max="30" data-slider-step="0.1" data-slider-value="20", data-slider-ticks="[0, 10, 20, 30]", data-slider-ticks-labels="['0','10','20','30']"/>
+          </div> 
         </div>
       </div>
     </div>
@@ -38,9 +54,30 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- flotcharts -->
 <script src="js/jquery.flot.js"></script>
+<!-- bootstrap-slider -->
+<script src="js/bootstrap-slider.js"></script>
 <!-- BootStrap V3.3.6 JS -->
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script>
+
+$("#mean").slider({
+  tooltip: 'always',
+  ticks: [-50, -25, 0, 25, 50],
+  ticks_labels: ['-50','-25','0','25','50']
+});
+
+$("#sd").slider({
+  tooltip: 'always',
+  ticks: [0, 10, 20, 30],
+  ticks_labels: ['0','10','20','30']
+});
+
+$("#a, #b").slider({
+  tooltip: 'always',
+  ticks: [0, 10, 20, 30],
+  ticks_labels: ['0','10','20','30']
+});
+
 $(function () {
 
     var d1 = [];
