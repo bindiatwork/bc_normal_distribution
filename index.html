@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>A Normal Distribution Calculator</title>
+  <title>Normal Distribution Calculator</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,9 +16,8 @@
   <header></header>
   <div class="container">
 
-    <div style="margin-top:10px;" class="jumbotron">
-      <h3>A Normal Distribution Calculator</h3>
-    </div>
+    <h2>Normal Distribution Calculator</h2>
+    <hr>
     <div class="row">
       <div class="col-md-8">
         <div id="placeholder" style="width: 100%; height: 400px;"></div>
@@ -26,9 +25,13 @@
       <div class="col-md-4">
         <div class="well">
           <h4>Mean</h4>
+          <br>
           <input id="mean" style="width: 100%;" type="text" data-slider-min="-50" data-slider-max="50" data-slider-step="1" data-slider-value="0", data-slider-ticks="[-50, -25, 0, 25, 50]", data-slider-ticks-labels="['-50','-25','0','25','50']"/>
+          <br><br>
           <h4>Standard Deviation</h4>
+          <br>
           <input id="sd" style="width: 100%;" type="text" data-slider-min="0.1" data-slider-max="30" data-slider-step="0.1" data-slider-value="20", data-slider-ticks="[0, 10, 20, 30]", data-slider-ticks-labels="['0','10','20','30']"/>
+          <br><br>
           <h4>Model</h4>
           <select class="form-control">
             <option>Lower tail - P( X &lt; a )</option>
@@ -38,12 +41,16 @@
           </select>
           <div>
             <h5>a:</h5>
+            <br>
             <input id="a" style="width: 100%;" type="text" data-slider-min="0.1" data-slider-max="30" data-slider-step="0.1" data-slider-value="20", data-slider-ticks="[0, 10, 20, 30]", data-slider-ticks-labels="['0','10','20','30']"/>
-          </div> 
+            <br><br>
+          </div>
           <div>
             <h5>b:</h5>
+            <br>
             <input id="b" style="width: 100%;" type="text" data-slider-min="0.1" data-slider-max="30" data-slider-step="0.1" data-slider-value="20", data-slider-ticks="[0, 10, 20, 30]", data-slider-ticks-labels="['0','10','20','30']"/>
-          </div> 
+            <br><br>
+          </div>
         </div>
       </div>
     </div>
@@ -80,52 +87,41 @@ $("#a, #b").slider({
 
 $(function () {
 
-    var d1 = [];
-    for (var i = 0; i < Math.PI * 2; i += 0.25) {
-      d1.push([i, Math.sin(i)]);
+    var data = [];
+    var sigma = 5.0;
+    var mu = 0.0;
+
+    function density (x) {
+      return 1 / (sigma*Math.sqrt(2*Math.PI)) * Math.exp(-(x-mu)*(x-mu)/(2*sigma*sigma));
+    };
+
+    for (var i = -20.0; i <= 20.0; i+=0.5) {
+      data.push([i, density(i)]);
+    };
+
+    var serie = {
+      label: "Normal Distribution",
+      data: data
     }
 
-    var d2 = [];
-    for (var i = 0; i < Math.PI * 2; i += 0.25) {
-      d2.push([i, Math.cos(i)]);
+    var serieSD = {
+      label: "SD",
+      data: []
     }
 
-    var d3 = [];
-    for (var i = 0; i < Math.PI * 2; i += 0.1) {
-      d3.push([i, Math.tan(i)]);
+    var sigmaMarkings = [
+      { color: "#000", lineWidth: 1, xaxis: { from: -10, to: -10 } },
+      { color: "#000", lineWidth: 1, xaxis: { from: -5, to: -5 } },
+      { color: "#000", lineWidth: 1, xaxis: { from: 5, to: 5 } },
+      { color: "#000", lineWidth: 1, xaxis: { from: 10, to: 10 }}
+    ]
+
+    var graphOption = {
+      legend: {show: true, position: 'nw'},
+      grid: {markings: sigmaMarkings}
     }
 
-    $.plot("#placeholder", [
-      { label: "sin(x)", data: d1 },
-      { label: "cos(x)", data: d2 },
-      { label: "tan(x)", data: d3 }
-    ], {
-      series: {
-        lines: { show: true },
-        points: { show: true }
-      },
-      xaxis: {
-        ticks: [
-          0, [ Math.PI/2, "\u03c0/2" ], [ Math.PI, "\u03c0" ],
-          [ Math.PI * 3/2, "3\u03c0/2" ], [ Math.PI * 2, "2\u03c0" ]
-        ]
-      },
-      yaxis: {
-        ticks: 10,
-        min: -2,
-        max: 2,
-        tickDecimals: 3
-      },
-      grid: {
-        backgroundColor: { colors: [ "#fff", "#eee" ] },
-        borderWidth: {
-          top: 1,
-          right: 1,
-          bottom: 2,
-          left: 2
-        }
-      }
-    });
+    $.plot("#placeholder",[serie], graphOption)
 
   });
 </script>
